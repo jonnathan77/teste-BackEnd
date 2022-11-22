@@ -3,6 +3,8 @@ Teste Parte somente do BackEnd
 
 Favor rodar um 'npm install' para todas as dependencias do node modules sejam instaladas com exito.
 
+Favor rodar o 'npm run dev' para rodar o backend
+
 O teste foi feito e esse repositorio contem somente a parte do back end.
 
 O crud completo está feito, as rotas estão feitas, a conexão com o banco de dados, tudo está dentro do repositorio.
