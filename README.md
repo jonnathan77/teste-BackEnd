@@ -3,7 +3,9 @@ Teste Parte somente do BackEnd
 
 Favor rodar um 'npm install' para todas as dependencias do node modules sejam instaladas com exito.
 
-Favor rodar o 'npm run dev' para rodar o backend
+Favor rodar o script do sql para as tabelas serem criadas
+
+Favor rodar o 'npm run dev' para rodar o backend.
 
 O teste foi feito e esse repositorio contem somente a parte do back end.
 
