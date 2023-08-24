@@ -1,25 +1,50 @@
-require('./config/conexao');
+//ISSO JA ESTA FUNCIONANDO
+// const express = require('express'); // importa o express
+// var http = require('http');
+// let app = express();
 
-const express = require('express');
-const port = (process.env.port || 3000);
+// var cors = require('cors');
 
-//express
-const app = express();
+// // use it before all route definitions
+// app.use(cors({origin: 'http://localhost:8100'}));
 
-//
-app.use(express.json())
+// app.post("/adicionarUsuario", ( req,res) => {
+//     res.setHeader('Content-Type', 'application/json');
 
-//config
-app.set('porta', port);
+//     return res.end(JSON.stringify({ a: 2 }));
 
-//rotas
-app.use('/api', require('./rotas'))
+// })
 
-//Iniciando o express
-app.listen(app.get('porta'), (error)=>{
-    if(error){
-        console.log('erro em inciar o servidor: ' + error)
-    }else{
-        console.log('Servidor iniciado na porta: '+port)
-    }
+// app.listen(3030, () => {
+//     console.log('O SERVIDOR ESTÁ RODANDO NA PORTA 3030');
+// })
+
+import express from 'express';
+import admin from 'firebase-admin';
+
+let app = express();
+
+admin.initializeApp({
+  credential: admin.credential.cert('serviceAccountKey.json')
+});
+
+
+app.get('/usuarios', (req, res) => {
+    console.log('GET usuarios');
+    admin.firestore()
+    .collection('usuarios')
+    .get()
+    .then(snapshot => {
+       const usuarios = snapshot.docs.map(doc => ({
+        ...doc.data(),
+        uid: doc.id
+       }))
+    res.json(usuarios);
+
+    })
+})
+
+
+app.listen(3030, () => {
+    console.log('O SERVIDOR ESTÁ RODANDO NA PORTA 3030');
 })

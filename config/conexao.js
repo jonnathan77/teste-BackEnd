@@ -7,12 +7,20 @@ const conexao = mysql.createConnection({
     database: 'db_basico'
 });
 
-conexao.connect((err)=>{
-    if(err){
-        console.log('Erro na conexão' + err)
-    }else{
-        console.log('Sucesso na conexão!!')
+conexao.connect (erro => 
+    {
+    if (erro) {
+        console.log (erro)
     }
-});
+    else
+    {
+        console.log (`conectado com sucesso`)
+        const app = customExpress ();
+
+        app.listen (3000,() => console.log('servidor rodando na porta 3000'));
+    }
+}
+)
+
 
 module.exports= conexao;
