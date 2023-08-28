@@ -41,10 +41,26 @@ app.get('/usuarios', (req, res) => {
 
     })
 })
-
 import cors from 'cors';
 
 app.use(cors({origin: 'http://localhost:8100'}));
+
+app.get('/produtos', (req, res) => {
+  console.log('GET produtos');
+  admin.firestore()
+  .collection('produtos')
+  .get()
+  .then(snapshot => {
+     const produtos = snapshot.docs.map(doc => ({
+      ...doc.data(),
+      uid: doc.id
+     }))
+  res.json(produtos);
+
+  })
+})
+
+
 
 app.post('/usuarios', async (req, res) => {
   admin.firestore()
