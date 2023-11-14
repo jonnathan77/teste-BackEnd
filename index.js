@@ -49,6 +49,9 @@ const cors = require('cors')
 const Gerencianet = require('gn-api-sdk-node')
 const options = require('../teste-BackEnd/credentials.json')
 const gerencianet = new Gerencianet(options)
+const fs = require('fs');
+const Endpoints = require('gn-api-sdk-node/lib/endpoints');
+const cert = fs.readFileSync('producao-516895-certificadoChicapp.p12');
 
 app.use(cors({origin: 'http://localhost:8100'}));
 
@@ -67,27 +70,46 @@ app.get('/produtos', (req, res) => {
   })
 })
 
-app.post('/:orderId/pix/billing',  async (req, res) => {
-    let chargeInput = {
-      items: [
-        {
-          name: 'Product A',
-          value: 1000,
-          amount: 2,
-        },
-      ],
-    }
+app.post('/gerarToken',  async (req, res) => {
+  try{
+      console.log('chegou aqui')
 
-    gerencianet
-      .createCharge({}, chargeInput)
-      .then((resposta) => {
-        console.log(resposta)
-        res.status(200).send({ msg: "Authentication", response : resposta.data})
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-    })
+      orderController.oAuthGerencianet(req, res)
+
+      res.status(200).send({ msg: "Token buscado com sucesso"})
+      //gerarQrCode
+
+
+     /* gerencianet
+        .createCharge({}, chargeInput)
+        .then((resposta) => {
+          console.log(resposta)
+          res.status(200).send({ msg: "Authentication", response : resposta.data})
+      
+          const cert = fs.readFileSync('producao-516895-certificadoChicapp.p12');
+          
+          Endpoints.options = cert
+          console.log(Endpoints.options)
+          var params = resposta.data.charge_id
+          gerencianet
+          .pixGenerateQRCode(cert, params)
+            .then((resposta) => {
+              console.log(resposta)
+            })
+            .catch((error) => {
+              console.log(error)
+            })
+
+        })
+        .catch((error) => {
+          console.log(error)
+        })*/
+
+    } catch (error) {
+      console.log(error)
+    }
+   
+  })
 
 app.post('/usuarios', async (req, res) => {
   admin.firestore()
