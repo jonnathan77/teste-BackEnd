@@ -1,7 +1,16 @@
 const express = require('express'); // importa o express
+const router = express.Router();
 
 const server = express(); // cria uma variável chamada server que chama a função express
+
+const orderController = require('../teste-BackEnd/controllers/orderController');
 
 server.get('/teste', () => {
 console.log('teste');
 })
+
+router.get('/')
+
+router.post('/:orderId/pix/billing', orderController.oAuthGerencianet)
+
+module.exports = router

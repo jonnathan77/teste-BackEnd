@@ -17,9 +17,12 @@
 //     console.log('O SERVIDOR ESTÁ RODANDO NA PORTA 3030');
 // })
 
-import express from 'express';
-import admin from 'firebase-admin';
-
+//import express from 'express';
+const express = require('express');
+const admin = require('firebase-admin');
+const rotas = require('../teste-BackEnd/rotas')
+const router = express.Router();
+const orderController = require('../teste-BackEnd/controllers/orderController');
 let app = express();
 
 admin.initializeApp({
@@ -41,7 +44,11 @@ app.get('/usuarios', (req, res) => {
 
     })
 })
-import cors from 'cors';
+const cors = require('cors')
+//import cors from 'cors';
+const Gerencianet = require('gn-api-sdk-node')
+const options = require('../teste-BackEnd/credentials.json')
+const gerencianet = new Gerencianet(options)
 
 app.use(cors({origin: 'http://localhost:8100'}));
 
@@ -60,7 +67,27 @@ app.get('/produtos', (req, res) => {
   })
 })
 
+app.post('/:orderId/pix/billing',  async (req, res) => {
+    let chargeInput = {
+      items: [
+        {
+          name: 'Product A',
+          value: 1000,
+          amount: 2,
+        },
+      ],
+    }
 
+    gerencianet
+      .createCharge({}, chargeInput)
+      .then((resposta) => {
+        console.log(resposta)
+        res.status(200).send({ msg: "Authentication", response : resposta.data})
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    })
 
 app.post('/usuarios', async (req, res) => {
   admin.firestore()
@@ -84,3 +111,5 @@ app.post('/usuarios', async (req, res) => {
 app.listen(3030, () => {
     console.log('O SERVIDOR ESTÁ RODANDO NA PORTA 3030');
 })
+
+module.exports = router
