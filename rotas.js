@@ -11,6 +11,6 @@ console.log('teste');
 
 router.get('/')
 
-router.post('/:orderId/pix/billing', orderController.oAuthGerencianet)
+router.post('/gerarToken', orderController.oAuthGerencianet)
 
 module.exports = router
