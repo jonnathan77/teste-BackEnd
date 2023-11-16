@@ -2,7 +2,6 @@
 // const express = require('express'); // importa o express
 // var http = require('http');
 // let app = express();
-
 // // use it before all route definitions
 
 // app.post("/adicionarUsuario", ( req,res) => {
