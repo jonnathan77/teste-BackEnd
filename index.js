@@ -18,9 +18,7 @@
 //import express from 'express';
 const express = require("express");
 const admin = require("firebase-admin");
-const rotas = require("../teste-BackEnd/rotas");
 const router = express.Router();
-const orderController = require("../teste-BackEnd/controllers/orderController");
 let app = express();
 
 admin.initializeApp({
@@ -44,7 +42,6 @@ app.get("/usuarios", (req, res) => {
 const cors = require("cors");
 //import cors from 'cors';
 const Gerencianet = require("gn-api-sdk-node");
-const options = require("../teste-BackEnd/credentials.json");
 const fs = require("fs");
 const Endpoints = require("gn-api-sdk-node/lib/endpoints");
 
