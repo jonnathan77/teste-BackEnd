@@ -19,7 +19,6 @@
 //import express from 'express';
 const express = require("express");
 const admin = require("firebase-admin");
-const rotas = require("../teste-BackEnd/rotas");
 const router = express.Router();
 const orderController = require("../teste-BackEnd/controllers/orderController");
 let app = express();
