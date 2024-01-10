@@ -18,8 +18,15 @@
 //import express from 'express';
 const express = require("express");
 const admin = require("firebase-admin");
+var bodyParser = require('body-parser')
 const router = express.Router();
 let app = express();
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
 
 admin.initializeApp({
   credential: admin.credential.cert("serviceAccountKey.json"),
@@ -106,7 +113,9 @@ app.post("/gerarToken", async (req, res) => {
         gerencianet
           .pixGenerateQRCode(txId)
           .then((resposta) => {
-            console.log(resposta);
+            return res
+              .status(200)
+              .send({ msg: "QrCode gerado com sucesso", response: resposta });
           })
           .catch((error) => {
             console.log(error);
@@ -196,5 +205,49 @@ app.post("/usuarios", async (req, res) => {
 app.listen(3030, () => {
   console.log("O SERVIDOR ESTÁ RODANDO NA PORTA 3030");
 });
+
+
+app.post("/buscarUsuario", async (req, res) => {
+  try {
+    var retorno = {};
+    const email = req.body.usuario;
+    const senha = req.body.senha;
+
+    console.log(req.body)
+ await admin.firestore().collection('usuarios')
+    .where("email", '==', email)
+    .where("senha", '==', senha)
+    .get().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+
+      retorno = doc.data()
+    })
+  }) 
+
+  console.log('retorno' + retorno)
+    if(retorno.length > 0){
+    res
+    .status(200)
+    .send({ msg: "Usuario criado com sucesso", response: retorno });
+    }
+      /*
+      CONTINUAR DEPOIS
+    .get()
+
+
+    .then((snapshot) => {
+      const usuarios = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+        uid: doc.idUsuario,
+      }));
+      res.json(usuarios);
+    });
+*/
+      console.log('cai aqui')
+  } catch (error) {
+    console.log(error);
+  }
+}
+);
 
 module.exports = router;

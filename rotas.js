@@ -9,7 +9,7 @@ server.get('/teste', () => {
 console.log('teste');
 })
 
-router.get('/')
+router.get('/');
 
 router.post('/gerarToken', orderController.oAuthGerencianet)
 
