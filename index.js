@@ -206,6 +206,32 @@ app.listen(3030, () => {
   console.log("O SERVIDOR ESTÁ RODANDO NA PORTA 3030");
 });
 
+app.post("/cadastrarProdutos", async (req, res) => {
+
+  try {
+  console.log(req.body.categoria)
+  await admin.firestore().collection("produtos").add({
+    categoria: req.body.categoria,
+    cor: req.body.cor,
+    descricao: req.body.descricao,
+    empresa: req.body.empresa,
+    id: req.body.id,
+    imagem: req.body.imagem,
+    nomeProduto: req.body.nomeProduto,
+  });
+
+  const data = req.body;
+
+  res
+    .status(200)
+    .send({ msg: "Produto cadastrado com sucesso", response: res.data });
+
+  } catch (error){
+    console.log(error);
+  }
+});
+
+
 
 app.post("/buscarUsuario", async (req, res) => {
   try {
@@ -219,8 +245,8 @@ app.post("/buscarUsuario", async (req, res) => {
     .where("senha", '==', senha)
     .get().then(querySnapshot => {
       querySnapshot.forEach(doc => {
-
-      retorno = doc.data()
+      retorno = doc.data();
+      console.log(retorno)
     })
   }) 
 
