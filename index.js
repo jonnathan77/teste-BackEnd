@@ -202,9 +202,7 @@ app.post("/usuarios", async (req, res) => {
     .send({ msg: "Usuario criado com sucesso", response: res.data });
 });
 
-app.listen(3030, () => {
-  console.log("O SERVIDOR ESTÁ RODANDO NA PORTA 3030");
-});
+app.listen(process.env.PORT || 3000);
 
 app.post("/cadastrarProdutos", async (req, res) => {
 
@@ -250,12 +248,10 @@ app.post("/buscarUsuario", async (req, res) => {
     })
   }) 
 
-  console.log('retorno' + retorno)
-    if(retorno.length > 0){
     res
     .status(200)
     .send({ msg: "Usuario criado com sucesso", response: retorno });
-    }
+
       /*
       CONTINUAR DEPOIS
     .get()
@@ -269,7 +265,6 @@ app.post("/buscarUsuario", async (req, res) => {
       res.json(usuarios);
     });
 */
-      console.log('cai aqui')
   } catch (error) {
     console.log(error);
   }
