@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/produtos", async (req, res) => {
+router.get("/getProdutos", async (req, res) => {
+
+  try{
     console.log("GET produtos");
     var produtos2 = null;
 
@@ -21,6 +23,10 @@ router.get("/produtos", async (req, res) => {
 
       });
       return res.status(200).json(produtos2);
+  } catch (e) {
+    res.status(500).json(e);
+  }
+   
   });
 
 
