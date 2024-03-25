@@ -273,15 +273,17 @@
 //TESTEEEEEEEEEEEEEEEEEEEEEEEEEEeee
 
 
+// Import packages
 const express = require("express");
 const produtos = require("./routes/produtos");
 
-let app = express();
+// Middlewares
+const app = express();
 app.use(express.json());
 
+// Routes
+app.use("/produtos", produtos);
 
-app.use("produtos", produtos);
-
-
+// connection
 const port = process.env.PORT || 3000;
-app.listen(process.env.PORT || 3000);
+app.listen(port, () => console.log(`Listening to port ${port}`));

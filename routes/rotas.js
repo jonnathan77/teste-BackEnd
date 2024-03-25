@@ -3,7 +3,7 @@ const router = express.Router();
 
 const server = express(); // cria uma variável chamada server que chama a função express
 
-const orderController = require('../teste-BackEnd/controllers/orderController');
+const orderController = require('../controllers/orderController');
 
 server.get('/teste', () => {
 console.log('teste');
