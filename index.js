@@ -1,21 +1,4 @@
-//ISSO JA ESTA FUNCIONANDO
-// const express = require('express'); // importa o express
-// var http = require('http');
-// let app = express();
-// // use it before all route definitions
 
-// app.post("/adicionarUsuario", ( req,res) => {
-//     res.setHeader('Content-Type', 'application/json');
-
-//     return res.end(JSON.stringify({ a: 2 }));
-
-// })
-
-// app.listen(3030, () => {
-//     console.log('O SERVIDOR ESTÁ RODANDO NA PORTA 3030');
-// })
-
-//import express from 'express';
 const express = require("express");
 const admin = require("firebase-admin");
 var bodyParser = require('body-parser')
@@ -51,6 +34,8 @@ const cors = require("cors");
 const Gerencianet = require("gn-api-sdk-node");
 const fs = require("fs");
 const Endpoints = require("gn-api-sdk-node/lib/endpoints");
+const produtos = require("./routes/produtos");
+
 
 var options2 = {
   sandbox: false,
@@ -61,6 +46,9 @@ var options2 = {
 const gerencianet = new Gerencianet(options2);
 
 app.use(cors({ origin: "http://localhost:8100" }));
+
+// Routes
+app.use("/getProdutos", produtos);
 
 app.get("/produtos", (req, res) => {
   console.log("GET produtos");
