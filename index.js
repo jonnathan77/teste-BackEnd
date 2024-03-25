@@ -287,3 +287,12 @@ app.use("/produtos", produtos);
 // connection
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening to port ${port}`));
+
+const router = express.Router();
+
+router.get("/", async (req, res, next) => {
+    return res.status(200).json({
+      title: "Express Testing",
+      message: "The app is working properly!",
+    });
+  });
