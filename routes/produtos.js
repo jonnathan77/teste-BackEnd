@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/getProdutos", async (req, res) => {
-
+app.get("/getProdutos", async (req, res) => {
   try{
     console.log("GET produtos");
     var produtos2 = null;
@@ -24,16 +23,16 @@ router.get("/getProdutos", async (req, res) => {
       });
       return res.status(200).json(produtos2);
   } catch (e) {
-    res.status(500).json(e);
+    return res.status(500).json(e);
   }
    
   });
 
 
-router.get("/", async (req, res, next) => {
+router.get("/a", async (req, res, next) => {
   return res.status(200).json({
     title: "Express Testing",
-    message: "The app is working properly!",
+    message: "teste!",
   });
 });
 
